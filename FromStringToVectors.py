@@ -55,3 +55,4 @@ print(dictionary.token2id)
 corpus = [dictionary.doc2bow(text) for text in texts]
 #corpora.MmCorpus.serialize('/tmp/deerwester.mm', corpus) # store to disk, for later use
 pprint(corpus)
+
