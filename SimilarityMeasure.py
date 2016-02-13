@@ -179,7 +179,7 @@ import random
 #Teleost (230189) - the dominant fish of present day.
 
 #query, index_query = getText(files,random.choice(binding))
-query, index_query = getText(files,"285")
+query, index_query = getText(files,"103595")
 query_bow = dictionary.doc2bow(query.lower().split())
 query_tfidf = tfidf[query_bow]
 
