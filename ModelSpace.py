@@ -2,7 +2,6 @@ __author__ = 'Mateusz'
 
 import re
 import logging
-import nltk
 import sys
 
 
@@ -12,9 +11,8 @@ def gen_tfidf(corpus):
     tfidf = models.TfidfModel(corpus, normalize=True)
     tStop = time()
     print "Running time tfidf: %f" % (tStop - tStart)
-    #tfidf.save('/Volumes/My Passport/gensim-wiki-ensimple/models/model.tfidf')
     pathtfidf = pathModelFolder + '/model.tfidf'
-    #tfidf.save(pathtfidf)
+    tfidf.save(pathtfidf)
     return tfidf
 
 
@@ -23,9 +21,9 @@ def gen_lsi(corpus,topics,comment):
     tStart = time()
     lsi = models.LsiModel(corpus, id2word=dictionary, num_topics=topics)
     tStop = time()
-    print "Running time lsi: %f" % (tStop - tStart)
+    print "Running time lsi "+comment+str(topics)+": %f" % (tStop - tStart)
     #lsi.save('/Volumes/My Passport/gensim-wiki-ensimple/models/model.lsi')
-    pathlsi = pathModelFolder + '/model-'+comment+str(topics)+'-.lsi'
+    pathlsi = pathModelFolder + '/model-'+comment+'-'+str(topics)+'.lsi'
     lsi.save(pathlsi)
 
 def gen_lda(corpus,topics,comment):
@@ -33,8 +31,8 @@ def gen_lda(corpus,topics,comment):
     tStart = time()
     lda = models.LdaModel(corpus=corpus, id2word=dictionary, update_every=1, num_topics=topics)
     tStop = time()
-    print "Running time lda: %f" % (tStop - tStart)
-    pathlda = pathModelFolder + '/model-'+comment+str(topics)+'-.lda'
+    print "Running time lda "+comment+str(topics)+": %f" % (tStop - tStart)
+    pathlda = pathModelFolder + '/model-'+comment+'-'+str(topics)+'.lda'
     lda.save(pathlda)
 
 def gen_ldaMultiCore(corpus,topics,comment):
@@ -43,18 +41,18 @@ def gen_ldaMultiCore(corpus,topics,comment):
     import multiprocessing as mp
     lda = models.LdaMulticore(corpus=corpus, id2word =dictionary, workers=(mp.cpu_count()/2-1), num_topics=topics)
     tStop = time()
-    print "Running time lda multicore: %f" % (tStop - tStart)
-    pathldamulti = pathModelFolder + '/model-'+comment+str(topics)+'-.ldamulti'
+    print "Running time lda multicore "+comment+str(topics)+": %f" % (tStop - tStart)
+    pathldamulti = pathModelFolder + '/model-'+comment+'-'+str(topics)+'.ldamulti'
     lda.save(pathldamulti)
 
 def gen_rp(corpus, topics, comment):
-    print "Started rp"+comment+" "+str(topics)
+    print "Started rp "+comment+" "+str(topics)
     tStart = time()
-    rp = models.RpModel(corpus, num_topics=500, id2word=dictionary)
+    rp = models.RpModel(corpus, num_topics=topics, id2word=dictionary)
     tStop = time()
-    print "Running time rp: %f" % (tStop - tStart)
+    print "Running time rp "+comment+str(topics)+": %f" % (tStop - tStart)
     #rp.save('/Volumes/My Passport/gensim-wiki-ensimple/models/model.rp')
-    pathrp = pathModelFolder + '/model-'+comment+str(topics)+'-.rp'
+    pathrp = pathModelFolder + '/model-'+comment+'-'+str(topics)+'.rp'
     rp.save(pathrp)
 
 
@@ -63,7 +61,7 @@ def gen_hdp(corpus,comment):
     tStart = time()
     hdp = models.HdpModel(corpus, id2word=dictionary)
     tStop = time()
-    print "Running time rp: %f" % (tStop - tStart)
+    print "Running time hdp "+comment+": %f" % (tStop - tStart)
     #hdp.save('/Volumes/My Passport/gensim-wiki-ensimple/models/model.hdp')
     pathhdp = pathModelFolder + '/model-'+comment+'.hdp'
     hdp.save(pathhdp)
@@ -90,9 +88,9 @@ dictionary = corpora.Dictionary.load(pathDictionary)
 corpus = corpora.MmCorpus(pathCorpus)
 print(corpus)
 
-new_doc = "Human computer interaction"
-new_vec = dictionary.doc2bow(new_doc.lower().split())
-print(new_vec)
+#new_doc = "Human computer interaction"
+#new_vec = dictionary.doc2bow(new_doc.lower().split())
+#print(new_vec)
 
 
 from time import time
@@ -104,9 +102,70 @@ corpus_tfidf = tfidf[corpus]
 #gen_hdp(corpus_tfidf,"bow")
 #gen_hdp(corpus,"tfidf")
 
-num_topics = [10, 20, 50, 100, 200, 500]
+import multiprocessing as mp
+
+    #for hypethreaded procs
+    #pool =  mp.Pool(processes=(mp.cpu_count()/2-1))
+if __name__ == '__main__':
+    pool = mp.Pool(processes=16)
+
+
+    num_topics = [10, 20, 50, 100, 200, 500]
+
+    comment = "tfidf"
+
+    pool.apply_async(gen_hdp, (corpus_tfidf, comment))
+    for n in num_topics:
+        pool.apply_async(gen_lsi, (corpus_tfidf, n, comment))
+        pool.apply_async(gen_lda, (corpus_tfidf, n, comment))
+        pool.apply_async(gen_rp, (corpus_tfidf, n, comment))
+
+    comment = "bow"
+    pool.apply_async(gen_hdp, args=(corpus, comment))
+    for n in num_topics:
+        pool.apply_async(gen_lsi, args=(corpus, n, comment))
+        pool.apply_async(gen_lda, args=(corpus, n, comment))
+        pool.apply_async(gen_rp, args=(corpus, n, comment))
+
+    pool.close()
+    pool.join()
+
+
+
+'''
+if __name__ == '__main__':
+    processes = []
+
+    num_topics = [10, ]#20, 50, 100, 200
+
+    comment = "tfidf"
+    processes.append(mp.Process(target=gen_hdp, args=(corpus_tfidf, comment)))
+    for n in num_topics:
+        processes.append(mp.Process(target=gen_lsi, args=(corpus_tfidf, n, comment)))
+        processes.append(mp.Process(target=gen_lda, args=(corpus_tfidf, n, comment)))
+        processes.append(mp.Process(target=gen_rp, args=(corpus_tfidf, n, comment)))
+
+    comment = "bow"
+    processes.append(mp.Process(target=gen_hdp, args=(corpus, comment)))
+    for n in num_topics:
+        processes.append(mp.Process(target=gen_lsi, args=(corpus, n, comment)))
+        processes.append(mp.Process(target=gen_lda, args=(corpus, n, comment)))
+        processes.append(mp.Process(target=gen_rp, args=(corpus, n, comment)))
+
+    for p in processes:
+        p.start()
+
+    for p in processes:
+        p.join()
+
+
+
+'''
+'''
+num_topics = [10, 20, 50, 100, 200]
 
 comment = "tfidf"
+gen_hdp(corpus_tfidf,comment)
 for n in num_topics:
     gen_lsi(corpus_tfidf, n, comment)
     gen_lda(corpus_tfidf, n, comment)
@@ -114,6 +173,7 @@ for n in num_topics:
     gen_rp(corpus_tfidf,n, comment)
 
 comment = "bow"
+gen_hdp(corpus,comment)
 for n in num_topics:
     gen_lsi(corpus, n, comment)
     gen_lda(corpus, n, comment)
@@ -121,6 +181,8 @@ for n in num_topics:
     gen_rp(corpus,n, comment)
 
 
+
+'''
 
 
 

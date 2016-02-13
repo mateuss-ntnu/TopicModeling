@@ -6,16 +6,88 @@ from gensim import corpora, models, similarities
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-
+import os
 import sys
+
+startLinePattern = re.compile('<doc.*>')
+endlinePattern = re.compile('</doc>')
+documentIdPattern = re.compile('<doc id="([^"]*)".*');
+documentTitlePattern = re.compile('<doc.*title="([^"]*)".*')
+documentUrlPattern = re.compile('<doc.*url="([^"]*)".*')
+
+
+
+
+def getTitle(__list, id):
+
+    for article_file in __list:
+        #print(article_file)
+        f = open(article_file)
+        line = f.readline()
+        while line:
+            # assume there's one document per line, tokens separated by whitespace
+            # yield dictionary.doc2bow(line.lower().split())
+            if startLinePattern.match(line):
+                if re.search(documentIdPattern, line).group(1) == id:
+                    return re.search(documentTitlePattern, line).group(1)
+                else:
+                    line = f.readline()
+
+            else:
+                line = f.readline()
+        f.close()
+
+def getText(__list, id):
+
+    for article_file in __list:
+        #print(article_file)
+        f = open(article_file)
+        line = f.readline()
+        while line:
+            # assume there's one document per line, tokens separated by whitespace
+            # yield dictionary.doc2bow(line.lower().split())
+            if startLinePattern.match(line):
+                document_id = re.search(documentIdPattern, line).group(1)
+                if document_id == id:
+                    text = ""
+                    line = f.readline()
+                    while line and not endlinePattern.match(line):
+                        text += line
+                        line = f.readline()
+                        # print text
+                    return text, document_id
+                else:
+                    line = f.readline()
+
+            else:
+                line = f.readline()
+        f.close()
+
+
+
+
+def returnArticlePaths():
+    pathDoc = "/Volumes/My Passport/wiki_ensimple-20160111/"
+    articles = []
+    if os.path.isdir(pathDoc):
+        for (path, dirs, files) in os.walk(pathDoc):
+            for fil in files:
+                if(not str(fil).startswith('.')):
+                    articles.append(str(path)+'/'+str(fil))
+        return sorted(articles)
+    else:
+        articles.append(pathDoc)
+        return articles
 
 if sys.argv.__len__() == 3:
      pathDictionary =    sys.argv[1] +"/dictionary.dict"
      pathCorpus =        sys.argv[1] +"/corpus.mm"
-     pathIndex =         sys.argv[1] +"/index.index"
+     pathIndex =         sys.argv[1] +"/index/model-bow-500.lsi.index"
      pathTFIDF =         sys.argv[1] +"/models/model.tfidf"
-     pathLsi =           sys.argv[1] +"/models/model-tfidf50-.lsi"
-     pathLda =           sys.argv[1] +"/models/model-tfidf50-.lda"
+     pathLsi =           sys.argv[1] +"/models/model-bow-500.lsi"
+     pathLda =           sys.argv[1] +"/models/model-bow-500.lda"
+     pathRp =            sys.argv[1] +"/models/model-bow-20.rp"
+     pathHdp =           sys.argv[1] +"/models/model-bow.hdp"
      pathBinding =       sys.argv[1] +"/corpus-docs.binding"
      query =             sys.argv[2]
 else:
@@ -71,8 +143,11 @@ else:
 ################################################################################
 #query = "Australia"
 
-
-createIndex = True
+os.fork()
+createIndex = False
+import pickle
+binding = pickle.load(open(pathBinding,'r'))
+files = returnArticlePaths()
 
 corpus = corpora.MmCorpus(pathCorpus)
 dictionary = corpora.Dictionary.load(pathDictionary)
@@ -84,27 +159,52 @@ corpus_tfidf = tfidf[corpus]
 
 lsi = models.LsiModel.load(pathLsi)
 lda = models.LdaModel.load(pathLda)
+rp  = models.RpModel.load(pathRp)
+hdp = models.HdpModel.load(pathHdp)
 
+import random
+
+#Other with interesting results
+#27 - Australia
+#383240 - Boeing 737 Classic
+#262895 - David Bruce (ice hockey) - results hockey and football players
+
+#Ocean related
+#103595 - Ocean
+#33466 - Plankton
+#9067 - Shark
+#285 - Fish
+#30975 - Porpoise - mammals living in the ocean
+#Salmon (20095)
+#Teleost (230189) - the dominant fish of present day.
+
+#query, index_query = getText(files,random.choice(binding))
+query, index_query = getText(files,"285")
 query_bow = dictionary.doc2bow(query.lower().split())
+query_tfidf = tfidf[query_bow]
+
 query_lsi = lsi[query_bow]
 query_lda = lda[query_bow]
+query_rp = rp[query_bow]
+query_hdp = hdp[query_bow]
 
-if(createIndex):
-    index = similarities.MatrixSimilarity(lda[corpus])
-    index.save(pathIndex)
-else:
-    index = similarities.Similarity.load(pathIndex)
+index = similarities.Similarity.load(pathIndex)
 print ' '
 
-sims = index[query_lda] # perform a similarity query against the corpus
+sims = index[query_lsi] # perform a similarity query against the corpus
 sims = sorted(enumerate(sims), key=lambda item: -item[1])
 #print(sims)
 
-import pickle
-binding = pickle.load(open(pathBinding,'r'))
 
-for i in range(0,15):
-    print "{0}\t\t->\t{1}".format(sims[i],binding[sims[i][0]])
+
+print "Similarity to query "+index_query+"\n"+query
+for i in range(0,100):
+    #i index of corpus
+    id_article = binding[sims[i][0]]
+    similarity_rate = sims[i][1]
+    title = getTitle(files,id_article)
+    #print "{0} -> {1} -> {2}".format(sims[i], id_article, title)
+    print "{0} ({1}) - {2}".format(title,id_article,similarity_rate)
 
 #for i in range(0,len(binding)):
 #    print "{0}\t{1}".format(i,binding[i])
