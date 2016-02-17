@@ -130,7 +130,7 @@ def genRpIndexFile(rp_model):
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
-if sys.argv.__len__() == 3:
+if sys.argv.__len__() == 2:
      pathDictionary =    sys.argv[1] +"/dictionary.dict"
      pathCorpus =        sys.argv[1] +"/corpus.mm"
      pathIndex =         sys.argv[1] +"/index"
@@ -140,7 +140,7 @@ if sys.argv.__len__() == 3:
      #pathLsi =           sys.argv[1] +"/models/model-tfidf-50.lsi"
      #pathLda =           sys.argv[1] +"/models/model-tfidf-50.lda"
      pathBinding =       sys.argv[1] +"/corpus-docs.binding"
-     pathSelectModel = sys.argv[2]
+     #pathSelectModel = sys.argv[2]
 else:
      print "pathFolder"
      quit()
@@ -149,7 +149,19 @@ else:
 corpus = corpora.MmCorpus(pathCorpus)
 dictionary = corpora.Dictionary.load(pathDictionary)
 
+#topics = ["10","20","50","100","200","500"]
+topics = ["20","50","100"]
+lsi_models = []
+lda_models = []
+hdp_models = returnModelsWithEnding(".hdp")
 
+for t in topics:
+
+    lsi_models.extend(returnModelsWithEnding(t+".lsi"))
+    lda_models.extend(returnModelsWithEnding(t+".lda"))
+    #rp_models = returnModelsWithEnding(".rp")
+
+control = 0
 
 '''
 
@@ -167,6 +179,8 @@ genHdpIndex()
 
 
 
+
+
 '''
 
 import multiprocessing as mp
@@ -174,19 +188,14 @@ import multiprocessing as mp
 if __name__ == '__main__':
     pool = mp.Pool(processes=8)
 
-    lsi_models= returnModelsWithEnding(".lsi")
-    lda_models= returnModelsWithEnding(".lda")
-    hdp_models= returnModelsWithEnding(".hdp")
-    rp_models= returnModelsWithEnding(".rp")
+    for lsi_model in lsi_models:
+        pool.apply_async(genLsiIndexFile, (lsi_model,))
 
+    for lda_model in lda_models:
+        pool.apply_async(genLdaIndexFile, (lda_model,))
 
-    pool.apply_async(genLsiIndexFile, (pathSelectModel,))
-
-    pool.apply_async(genLdaIndexFile, (pathSelectModel,))
-
-    pool.apply_async(genHdpIndexFile, (pathSelectModel,))
-
-    pool.apply_async(genRpIndexFile, (pathSelectModel,))
+    for hdp_model in hdp_models:
+        pool.apply_async(genHdpIndexFile, (hdp_model,))
 
     pool.close()
     pool.join()

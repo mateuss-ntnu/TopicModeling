@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e9c318a-3820-4f79-adbf-9dce7a81cbde" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GenSimMatrix.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ModelSpace2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ModelSpaceShare.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SolrImplementation.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/solr.py" afterPath="$PROJECT_DIR$/solr-test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GenSimMatrix.py" afterPath="$PROJECT_DIR$/GenSimMatrix.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimilarityMeasure.py" afterPath="$PROJECT_DIR$/SimilarityMeasure.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SolrImplementation.py" afterPath="$PROJECT_DIR$/SolrImplementation.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,11 +39,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ModelSpaceShare.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ModelSpaceShare.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ModelSpaceShare.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-0.36363637">
-                  <caret line="122" column="14" selection-start-line="122" selection-start-column="14" selection-end-line="122" selection-end-column="14" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
                   <folding>
                     <element signature="e#24#33#0" expanded="true" />
                   </folding>
@@ -63,11 +63,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="TraverseArticleTitles.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="TraverseArticleTitles.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/TraverseArticleTitles.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="34" selection-end-column="26" />
+                <state vertical-scroll-proportion="0.096618354">
+                  <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="56" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -109,7 +109,7 @@
             <entry file="file://$PROJECT_DIR$/SimilarityMeasure.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+                  <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -146,8 +146,8 @@
           <file leaf-file-name="SimilarityMeasure.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/SimilarityMeasure.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="175" column="11" selection-start-line="175" selection-start-column="11" selection-end-line="175" selection-end-column="11" />
+                <state vertical-scroll-proportion="-7.3333335">
+                  <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -167,11 +167,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="GenSimMatrix.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="GenSimMatrix.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/GenSimMatrix.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
+                <state vertical-scroll-proportion="-1.0772947">
+                  <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -191,11 +191,23 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="SolrImplementation.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="SolrImplementation.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/SolrImplementation.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <caret line="89" column="22" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="34" />
+                  <folding>
+                    <element signature="e#0#11#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="solr-test.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/solr-test.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -267,11 +279,11 @@
         <option value="$PROJECT_DIR$/TraverseArticleTitles.py" />
         <option value="$PROJECT_DIR$/GenerateSimilarityMatrices.py" />
         <option value="$PROJECT_DIR$/ModelSpace.py" />
-        <option value="$PROJECT_DIR$/SimilarityMeasure.py" />
-        <option value="$PROJECT_DIR$/GenSimMatrix.py" />
         <option value="$PROJECT_DIR$/ModelSpaceShare.py" />
         <option value="$PROJECT_DIR$/ModelSpace2.py" />
         <option value="$PROJECT_DIR$/SolrImplementation.py" />
+        <option value="$PROJECT_DIR$/SimilarityMeasure.py" />
+        <option value="$PROJECT_DIR$/GenSimMatrix.py" />
       </list>
     </option>
   </component>
@@ -356,24 +368,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ModelSpace2">
-    <configuration default="false" name="ModelSpace" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="gensim" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ModelSpace.py" />
-      <option name="PARAMETERS" value="&quot;/Volumes/My Passport/gensim-wiki-ensimple-20160111&quot;" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.GenSimMatrix">
     <configuration default="false" name="SimilarityMeasure" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -388,23 +383,6 @@
       <module name="gensim" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SimilarityMeasure.py" />
       <option name="PARAMETERS" value="&quot;/Volumes/My Passport/gensim-wiki-ensimple-20160111&quot; &quot; &quot;" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="GenerateSimilarityMatrices" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="gensim" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GenerateSimilarityMatrices.py" />
-      <option name="PARAMETERS" value="&quot;/Volumes/My Passport/gensim-wiki-ensimple-20160111&quot;" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -439,6 +417,40 @@
       <module name="gensim" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ModelSpace2.py" />
       <option name="PARAMETERS" value="&quot;/Volumes/My Passport/gensim-enwiki-20160113&quot;" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SolrImplementation" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="gensim" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SolrImplementation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GenSimMatrix" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="gensim" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GenSimMatrix.py" />
+      <option name="PARAMETERS" value="&quot;/Volumes/My Passport/gensim-wiki-ensimple-20160111&quot;" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -565,19 +577,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.ModelSpace" />
-      <item index="1" class="java.lang.String" itemvalue="Python.SimilarityMeasure" />
-      <item index="2" class="java.lang.String" itemvalue="Python.GenerateSimilarityMatrices" />
-      <item index="3" class="java.lang.String" itemvalue="Python.ModelSpaceShare" />
-      <item index="4" class="java.lang.String" itemvalue="Python.ModelSpace2" />
+      <item index="0" class="java.lang.String" itemvalue="Python.SimilarityMeasure" />
+      <item index="1" class="java.lang.String" itemvalue="Python.ModelSpaceShare" />
+      <item index="2" class="java.lang.String" itemvalue="Python.ModelSpace2" />
+      <item index="3" class="java.lang.String" itemvalue="Python.SolrImplementation" />
+      <item index="4" class="java.lang.String" itemvalue="Python.GenSimMatrix" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.ModelSpace2" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ModelSpaceShare" />
-        <item index="2" class="java.lang.String" itemvalue="Python.SimilarityMeasure" />
-        <item index="3" class="java.lang.String" itemvalue="Python.GenerateSimilarityMatrices" />
-        <item index="4" class="java.lang.String" itemvalue="Python.ModelSpace" />
+        <item index="0" class="java.lang.String" itemvalue="Python.GenSimMatrix" />
+        <item index="1" class="java.lang.String" itemvalue="Python.SimilarityMeasure" />
+        <item index="2" class="java.lang.String" itemvalue="Python.SolrImplementation" />
+        <item index="3" class="java.lang.String" itemvalue="Python.ModelSpace2" />
+        <item index="4" class="java.lang.String" itemvalue="Python.ModelSpaceShare" />
       </list>
     </recent_temporary>
   </component>
@@ -633,18 +645,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10742496" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52403283" sideWeight="0.50277776" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32806325" sideWeight="0.49722221" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39624506" sideWeight="0.49722221" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.51679844" sideWeight="0.49722221" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35869566" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35869566" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913843" sideWeight="0.49722221" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -678,7 +690,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/solr.py</url>
+          <url>file://$PROJECT_DIR$/solr-test.py</url>
           <line>10</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -728,16 +740,6 @@
           <option name="timeStamp" value="100" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/SimilarityMeasure.py</url>
-          <line>182</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/SimilarityMeasure.py</url>
-          <line>49</line>
-          <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/GenerateSimilarityMatrices.py</url>
           <line>118</line>
           <option name="timeStamp" value="107" />
@@ -767,6 +769,31 @@
           <line>89</line>
           <option name="timeStamp" value="121" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/SolrImplementation.py</url>
+          <line>89</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/SimilarityMeasure.py</url>
+          <line>39</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/SimilarityMeasure.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/SimilarityMeasure.py</url>
+          <line>184</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/GenSimMatrix.py</url>
+          <line>163</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -775,12 +802,12 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="122" />
+      <option name="time" value="138" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/solr.py">
+    <entry file="file://$PROJECT_DIR$/solr-test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
@@ -843,7 +870,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/solr.py">
+    <entry file="file://$PROJECT_DIR$/solr-test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
@@ -955,14 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/solr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WikiCorpus.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1043,16 +1062,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TraverseArticleTitles.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="34" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda/lib/python2.7/pickle.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1095,16 +1104,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimilarityMeasure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="11" selection-start-line="175" selection-start-column="11" selection-end-line="175" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BrowseFiles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1123,30 +1122,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GenSimMatrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ModelSpace.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="77" column="1" selection-start-line="77" selection-start-column="1" selection-end-line="77" selection-end-column="1" />
-          <folding>
-            <element signature="e#24#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ModelSpaceShare.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.36363637">
-          <caret line="122" column="14" selection-start-line="122" selection-start-column="14" selection-end-line="122" selection-end-column="14" />
           <folding>
             <element signature="e#24#33#0" expanded="true" />
           </folding>
@@ -1181,11 +1160,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ModelSpaceShare.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TraverseArticleTitles.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.096618354">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/solr-test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SolrImplementation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="89" column="22" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimilarityMeasure.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.3333335">
+          <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GenSimMatrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0772947">
+          <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

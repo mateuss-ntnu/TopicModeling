@@ -1,7 +1,6 @@
 import re
 import logging
-import nltk
-import sys
+import solr
 from gensim import corpora, models, similarities
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -37,31 +36,31 @@ def getTitle(__list, id):
                 line = f.readline()
         f.close()
 
-def getText(__list, id):
-
-    for article_file in __list:
-        #print(article_file)
-        f = open(article_file)
-        line = f.readline()
-        while line:
-            # assume there's one document per line, tokens separated by whitespace
-            # yield dictionary.doc2bow(line.lower().split())
-            if startLinePattern.match(line):
-                document_id = re.search(documentIdPattern, line).group(1)
-                if document_id == id:
-                    text = ""
+def getText(location, id):
+    pathDoc = "/Volumes/My Passport/wiki_ensimple-20160111/"
+    article_file = pathDoc+location
+    #print(article_file)
+    f = open(article_file)
+    line = f.readline()
+    while line:
+        # assume there's one document per line, tokens separated by whitespace
+        # yield dictionary.doc2bow(line.lower().split())
+        if startLinePattern.match(line):
+            document_id = re.search(documentIdPattern, line).group(1)
+            if document_id == id:
+                text = ""
+                line = f.readline()
+                while line and not endlinePattern.match(line):
+                    text += line
                     line = f.readline()
-                    while line and not endlinePattern.match(line):
-                        text += line
-                        line = f.readline()
-                        # print text
-                    return text, document_id
-                else:
-                    line = f.readline()
-
+                    # print text
+                return text, document_id
             else:
                 line = f.readline()
-        f.close()
+
+        else:
+            line = f.readline()
+    f.close()
 
 
 
@@ -82,7 +81,7 @@ def returnArticlePaths():
 if sys.argv.__len__() == 3:
      pathDictionary =    sys.argv[1] +"/dictionary.dict"
      pathCorpus =        sys.argv[1] +"/corpus.mm"
-     pathIndex =         sys.argv[1] +"/index/model-bow-500.lsi.index"
+     pathIndex =         sys.argv[1] +"/index/model-bow-500.lda.index"
      pathTFIDF =         sys.argv[1] +"/models/model.tfidf"
      pathLsi =           sys.argv[1] +"/models/model-bow-500.lsi"
      pathLda =           sys.argv[1] +"/models/model-bow-500.lda"
@@ -143,7 +142,7 @@ else:
 ################################################################################
 #query = "Australia"
 
-os.fork()
+
 createIndex = False
 import pickle
 binding = pickle.load(open(pathBinding,'r'))
@@ -157,10 +156,10 @@ tfidf = models.TfidfModel.load(pathTFIDF)
 
 corpus_tfidf = tfidf[corpus]
 
-lsi = models.LsiModel.load(pathLsi)
+#lsi = models.LsiModel.load(pathLsi)
 lda = models.LdaModel.load(pathLda)
-rp  = models.RpModel.load(pathRp)
-hdp = models.HdpModel.load(pathHdp)
+#rp  = models.RpModel.load(pathRp)
+#hdp = models.HdpModel.load(pathHdp)
 
 import random
 
@@ -179,32 +178,44 @@ import random
 #Teleost (230189) - the dominant fish of present day.
 
 #query, index_query = getText(files,random.choice(binding))
-query, index_query = getText(files,"103595")
+s = solr.SolrConnection('http://localhost:8983/solr/simplewiki')
+keyword = "Oceanography"
+solr_query = s.query('title:"'+keyword+'"')
+location = str(solr_query.results[0]["location"][0])
+query_id = str(solr_query.results[0]["id"])
+
+query, index_query = getText(location, query_id)
 query_bow = dictionary.doc2bow(query.lower().split())
 query_tfidf = tfidf[query_bow]
 
-query_lsi = lsi[query_bow]
+#query_lsi = lsi[query_bow]
 query_lda = lda[query_bow]
-query_rp = rp[query_bow]
-query_hdp = hdp[query_bow]
+#query_rp = rp[query_bow]
+#query_hdp = hdp[query_bow]
 
 index = similarities.Similarity.load(pathIndex)
 print ' '
 
-sims = index[query_lsi] # perform a similarity query against the corpus
+sims = index[query_lda] # perform a similarity query against the corpus
 sims = sorted(enumerate(sims), key=lambda item: -item[1])
 #print(sims)
 
 
 
 print "Similarity to query "+index_query+"\n"+query
-for i in range(0,100):
+for i in range(0,11):
     #i index of corpus
     id_article = binding[sims[i][0]]
     similarity_rate = sims[i][1]
-    title = getTitle(files,id_article)
+
+    solr_query = s.query('id:"'+id_article+'"')
+    #title = getTitle(files,id_article)
+    title = str(solr_query.results[0]['title'][0])
+    location = str(solr_query.results[0]['location'][0])
     #print "{0} -> {1} -> {2}".format(sims[i], id_article, title)
     print "{0} ({1}) - {2}".format(title,id_article,similarity_rate)
+    text = getText(location,id_article)[0]
+    #print text
 
 #for i in range(0,len(binding)):
 #    print "{0}\t{1}".format(i,binding[i])
