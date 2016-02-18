@@ -1,10 +1,10 @@
 import re
 import logging
-import errno
 import nltk
 import os
 from gensim import corpora
 from time import time
+import Tools
 
 
 class GenerateCorpus:
@@ -61,14 +61,6 @@ class GenerateWikiCorpus:
         self._pathDoc = path_doc
         self._pathBinding = path_location + "/corpus-docs.binding"
 
-    @staticmethod
-    def create_folder_if_not_exists(path):
-        try:
-            os.makedirs(path)
-        except OSError as exception:
-            if exception.errno != errno.EEXIST:
-                raise
-
     def return_article_paths(self):
         articles = []
         if os.path.isdir(self._pathDoc):
@@ -96,53 +88,25 @@ class GenerateWikiCorpus:
 
         return articles
 
-    @staticmethod
-    def count_articles(path):
-        f = open(path)
-        line = f.readline()
-        count = 0
-        while line:
-            # assume there's one document per line, tokens separated by whitespace
-            # yield dictionary.doc2bow(line.lower().split())
-            startLinePattern = re.compile("<doc.*>")
-            endlinePattern = re.compile("</doc>")
-            if startLinePattern.match(line):
-                count + 1
-        f.close()
 
-    def countArticleHierarcy(self, paths_list):
-        for path in paths_list:
-            f = open(path)
-            line = f.readline()
-            count = 0;
-            while line:
-                # assume there's one document per line, tokens separated by whitespace
-                # yield dictionary.doc2bow(line.lower().split())
-                startLinePattern = re.compile("<doc.*>")
-                endlinePattern = re.compile("</doc>")
-                if startLinePattern.match(line):
-                    count + 1
-            f.close()
 
     def generate(self):
         # pathDictionary = '/Volumes/My Passport/gensim-wiki/dictionary.dict'
         # pathCorpus = '/Volumes/My Passport/gensim-wiki/corpus.mm'
 
-        self.create_folder_if_not_exists(self._pathLocation)
+        Tools.create_folder_if_not_exists(self._pathLocation)
 
-
-
-        tStart = time()
+        t_start = time()
 
         # Generate a list of files
-        listFiles = self.return_article_paths()
+        list_files = self.return_article_paths()
 
-        iterText = ParseWikiText(listFiles)
-        dictionary = corpora.Dictionary(text.lower().split() for text in iterText)
+        iter_text = ParseWikiText(list_files)
+        dictionary = corpora.Dictionary(text.lower().split() for text in iter_text)
         # remove stop words and words that appear only once
 
-        IDs = iterText.get_ids
-        IDs = IDs.im_self.listIDs
+        ids = iter_text.get_ids
+        ids = ids.im_self.listIDs
 
         stoplist = set(nltk.corpus.stopwords.words("english"))
         stop_ids = [dictionary.token2id[stopword] for stopword in stoplist if stopword in dictionary.token2id]
@@ -151,17 +115,17 @@ class GenerateWikiCorpus:
         dictionary.compactify()
         dictionary.save(self._pathDictionary)
 
-        corpus = GenerateCorpus(listFiles,dictionary)
+        corpus = GenerateCorpus(list_files, dictionary)
         corpora.MmCorpus.serialize(self._pathCorpus, corpus)
 
         # Save index to file
 
         import pickle
-        pickle.dump(IDs, open(self._pathBinding, 'w'));
+        pickle.dump(ids, open(self._pathBinding, 'w'))
 
-        # for i in range(0,len(IDs)):
-        #    print "{0}\t{1}".format(i,IDs[i])
+        # for i in range(0,len(ids)):
+        #    print "{0}\t{1}".format(i,ids[i])
 
-        tEnd = time()
+        t_end = time()
 
-        print "Running time: %f" % (tEnd - tStart)
+        print "Running time: %f" % (t_end - t_start)
