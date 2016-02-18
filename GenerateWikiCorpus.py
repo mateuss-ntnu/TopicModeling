@@ -1,65 +1,24 @@
-__author__ = 'Mateusz'
-
 import re
 import logging
-import nltk
-
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
-pathDictionary = ''
-pathCorpus = ''
-pathDoc = ''
-pathBinding = ''
-
 import sys
-
-if sys.argv.__len__() == 5:
-    pathDictionary = sys.argv[1]
-    pathCorpus = sys.argv[2]
-    pathDoc = sys.argv[3]
-    pathBinding = sys.argv[4]
-
+import nltk
 import os
-
-def returnArticlePaths():
-    articles = []
-    if os.path.isdir(pathDoc):
-        for (path, dirs, files) in os.walk(pathDoc):
-            for fil in files:
-                if(not str(fil).startswith('.')):
-                    articles.append(str(path)+'/'+str(fil))
-        return sorted(articles)
-    else:
-        articles.append(pathDoc)
-        return articles
-
-def returnArticles():
-    articles = []
-
-    os.chdir(pathDoc)
-    list = os.listdir(os.curdir)
-
-    for dir in list:
-
-        if os.path.isdir(dir):
-            sublist = filter(lambda f: not f.startswith('.'), os.listdir(dir))
-            articles.extend(sublist)
-            # return articles
-
-    return articles
+from gensim import corpora
+from time import time
 
 
-class GenerateWikiCorpus():
-    def __init__(self,article_files):
+class GenerateCorpus:
+    def __init__(self, article_files, dictionary):
         self.__list = article_files
+        self._dictionary = dictionary
 
     def __iter__(self):
         for text in ParseWikiText(self.__list):
-            yield dictionary.doc2bow(text.lower().split())
+            yield self._dictionary.doc2bow(text.lower().split())
 
 
-class ParseWikiText():
-    def __init__(self,article_files):
+class ParseWikiText:
+    def __init__(self, article_files):
         self.__list = article_files
         self.listIDs = []
 
@@ -72,14 +31,14 @@ class ParseWikiText():
                 # assume there's one document per line, tokens separated by whitespace
                 # yield dictionary.doc2bow(line.lower().split())
 
-                startLinePattern = re.compile('<doc.*>')
-                endlinePattern = re.compile('</doc>')
-                documentIdPattern = re.compile('<doc id="([^"]*)".*');
-                if startLinePattern.match(line):
-                    self.listIDs.append(re.search(documentIdPattern, line).group(1))
+                start_line_pattern = re.compile('<doc.*>')
+                end_line_pattern = re.compile('</doc>')
+                document_id_pattern = re.compile('<doc id="([^"]*)".*')
+                if start_line_pattern.match(line):
+                    self.listIDs.append(re.search(document_id_pattern, line).group(1))
                     text = ""
                     line = f.readline()
-                    while line and not endlinePattern.match(line):
+                    while line and not end_line_pattern.match(line):
                         text += line
                         line = f.readline()
                     # print text
@@ -88,28 +47,57 @@ class ParseWikiText():
                     line = f.readline()
             f.close()
 
-    def getIDs(self):
+    def get_ids(self):
         return self.listIDs
 
 
-def countArticles(path):
-    f = open(path)
-    line = f.readline()
-    count = 0;
-    while line:
-        # assume there's one document per line, tokens separated by whitespace
-        # yield dictionary.doc2bow(line.lower().split())
-        startLinePattern = re.compile("<doc.*>")
-        endlinePattern = re.compile("</doc>")
-        if startLinePattern.match(line):
-            count + 1
-    f.close()
+class GenerateWikiCorpus:
+    def __init__(self, path_dictionary, path_corpus, path_doc, path_binding):
+        logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-def countArticleHierarcy(list):
-    for path in list:
+        if sys.argv.__len__() == 5:
+            self._pathDictionary = sys.argv[1]
+            self._pathCorpus = sys.argv[2]
+            self._pathDoc = sys.argv[3]
+            self._pathBinding = sys.argv[4]
+        else:
+            self._pathDictionary = path_dictionary
+            self._pathCorpus = path_corpus
+            self._pathDoc = path_doc
+            self._pathBinding = path_binding
+
+    def return_article_paths(self):
+        articles = []
+        if os.path.isdir(self._pathDoc):
+            for (path, dirs, files) in os.walk(self._pathDoc):
+                for fil in files:
+                    if not str(fil).startswith('.'):
+                        articles.append(str(path) + '/' + str(fil))
+            return sorted(articles)
+        else:
+            articles.append(self._pathDoc)
+            return articles
+
+    def return_articles(self):
+        articles = []
+
+        os.chdir(self._pathDoc)
+        paths_list = os.listdir(os.curdir)
+
+        for directory in paths_list:
+
+            if os.path.isdir(directory):
+                sub_list = filter(lambda f: not f.startswith('.'), os.listdir(directory))
+                articles.extend(sub_list)
+                # return articles
+
+        return articles
+
+    @staticmethod
+    def count_articles(path):
         f = open(path)
         line = f.readline()
-        count = 0;
+        count = 0
         while line:
             # assume there's one document per line, tokens separated by whitespace
             # yield dictionary.doc2bow(line.lower().split())
@@ -119,49 +107,57 @@ def countArticleHierarcy(list):
                 count + 1
         f.close()
 
+    def countArticleHierarcy(self, paths_list):
+        for path in paths_list:
+            f = open(path)
+            line = f.readline()
+            count = 0;
+            while line:
+                # assume there's one document per line, tokens separated by whitespace
+                # yield dictionary.doc2bow(line.lower().split())
+                startLinePattern = re.compile("<doc.*>")
+                endlinePattern = re.compile("</doc>")
+                if startLinePattern.match(line):
+                    count + 1
+            f.close()
 
-from gensim import corpora, models, similarities
-
-# pathDictionary = '/Volumes/My Passport/gensim-wiki/dictionary.dict'
-# pathCorpus = '/Volumes/My Passport/gensim-wiki/corpus.mm'
-
-
-from time import time
-
-tStart = time()
-
-# Generate a list of files
-listFiles = returnArticlePaths()
-
-iterText = ParseWikiText(listFiles)
-dictionary = corpora.Dictionary(text.lower().split() for text in iterText)
-# remove stop words and words that appear only once
-
-IDs = iterText.getIDs
-IDs = IDs.im_self.listIDs
-
-import nltk
-
-stoplist = set(nltk.corpus.stopwords.words("english"))
-stop_ids = [dictionary.token2id[stopword] for stopword in stoplist if stopword in dictionary.token2id]
-once_ids = [tokenid for tokenid, docfreq in dictionary.dfs.iteritems() if docfreq == 1]
-dictionary.filter_tokens(stop_ids + once_ids)  # remove stop words and words that appear only once
-dictionary.compactify()
-dictionary.save(pathDictionary)
-
-corpus = GenerateWikiCorpus(listFiles)
-corpora.MmCorpus.serialize(pathCorpus, corpus)
-
-#Save index to file
-
-import pickle
-pickle.dump(IDs, open(pathBinding, 'w'));
+    def generate(self):
+        # pathDictionary = '/Volumes/My Passport/gensim-wiki/dictionary.dict'
+        # pathCorpus = '/Volumes/My Passport/gensim-wiki/corpus.mm'
 
 
-#for i in range(0,len(IDs)):
-#    print "{0}\t{1}".format(i,IDs[i])
 
-tEnd = time()
 
-print "Running time: %f" % (tEnd - tStart)
+        tStart = time()
 
+        # Generate a list of files
+        listFiles = self.return_article_paths()
+
+        iterText = ParseWikiText(listFiles)
+        dictionary = corpora.Dictionary(text.lower().split() for text in iterText)
+        # remove stop words and words that appear only once
+
+        IDs = iterText.get_ids
+        IDs = IDs.im_self.listIDs
+
+        stoplist = set(nltk.corpus.stopwords.words("english"))
+        stop_ids = [dictionary.token2id[stopword] for stopword in stoplist if stopword in dictionary.token2id]
+        once_ids = [tokenid for tokenid, docfreq in dictionary.dfs.iteritems() if docfreq == 1]
+        dictionary.filter_tokens(stop_ids + once_ids)  # remove stop words and words that appear only once
+        dictionary.compactify()
+        dictionary.save(self._pathDictionary)
+
+        corpus = GenerateCorpus(listFiles)
+        corpora.MmCorpus.serialize(self._pathCorpus, corpus)
+
+        # Save index to file
+
+        import pickle
+        pickle.dump(IDs, open(self._pathBinding, 'w'));
+
+        # for i in range(0,len(IDs)):
+        #    print "{0}\t{1}".format(i,IDs[i])
+
+        tEnd = time()
+
+        print "Running time: %f" % (tEnd - tStart)
