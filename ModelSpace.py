@@ -87,8 +87,8 @@ class ModelSpace:
     def prepare_gen(self):
         Tools.create_folder_if_not_exists(self._pathModelsFolder)
         pathtfidf = self._pathModelsFolder + '/model.tfidf'
-        #self._tfidf = self.gen_tfidf(self._corpus)
-        self._tfidf = models.TfidfModel.load(pathtfidf)
+        self._tfidf = self.gen_tfidf(self._corpus)
+        #self._tfidf = models.TfidfModel.load(pathtfidf)
         self._corpus_tfidf = self._tfidf[self._corpus]
 
     def gen_model_serial(self):
@@ -119,27 +119,26 @@ class ModelSpace:
         self.prepare_gen()
 
 
-        pool = mp.Pool(processes=2)
+        pool = mp.Pool(processes=processes)
 
 
 
         comment = "tfidf"
-        processes = []
-        processes.append(pool.apply_async(self.gen_hdp, (self._corpus_tfidf, comment)))
+        pool.apply_async(self.gen_hdp, (self._corpus_tfidf, comment))
         for n in self._num_topics:
-            processes.append(pool.apply_async(self.gen_lsi, (self._corpus_tfidf, n, comment)))
-            processes.append(pool.apply_async(self.gen_lda, (self._corpus_tfidf, n, comment)))
-            processes.append(pool.apply_async(self.gen_rp, (self._corpus_tfidf, n, comment)))
+            pool.apply_async(self.gen_lsi, (self._corpus_tfidf, n, comment))
+            pool.apply_async(self.gen_lda, (self._corpus_tfidf, n, comment))
+            pool.apply_async(self.gen_rp, (self._corpus_tfidf, n, comment))
 
         comment = "bow"
-        processes.append(pool.apply_async(self.gen_hdp, (self._corpus, comment)))
+        pool.apply_async(self.gen_hdp, (self._corpus, comment))
         for n in self._num_topics:
-            processes.append(pool.apply_async(self.gen_lsi, (self._corpus, n, comment)))
-            processes.append(pool.apply_async(self.gen_lda, (self._corpus, n, comment)))
-            processes.append(pool.apply_async(self.gen_rp, (self._corpus, n, comment)))
+            pool.apply_async(self.gen_lsi, (self._corpus, n, comment))
+            pool.apply_async(self.gen_lda, (self._corpus, n, comment))
+            pool.apply_async(self.gen_rp, (self._corpus, n, comment))
 
         pool.close()
-        map(mp.pool.ApplyResult.wait, processes)
+        pool.join()
 
 
     def gen_model_processes(self):
