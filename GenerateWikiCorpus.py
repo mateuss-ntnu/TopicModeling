@@ -1,6 +1,6 @@
 import re
 import logging
-import sys
+import errno
 import nltk
 import os
 from gensim import corpora
@@ -52,19 +52,22 @@ class ParseWikiText:
 
 
 class GenerateWikiCorpus:
-    def __init__(self, path_dictionary, path_corpus, path_doc, path_binding):
+    def __init__(self, path_location, path_doc):
         logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-        if sys.argv.__len__() == 5:
-            self._pathDictionary = sys.argv[1]
-            self._pathCorpus = sys.argv[2]
-            self._pathDoc = sys.argv[3]
-            self._pathBinding = sys.argv[4]
-        else:
-            self._pathDictionary = path_dictionary
-            self._pathCorpus = path_corpus
-            self._pathDoc = path_doc
-            self._pathBinding = path_binding
+        self._pathLocation = path_location
+        self._pathDictionary = path_location + "/dictionary.dict"
+        self._pathCorpus = path_location + "/corpus.mm"
+        self._pathDoc = path_doc
+        self._pathBinding = path_location + "/corpus-docs.binding"
+
+    @staticmethod
+    def create_folder_if_not_exists(path):
+        try:
+            os.makedirs(path)
+        except OSError as exception:
+            if exception.errno != errno.EEXIST:
+                raise
 
     def return_article_paths(self):
         articles = []
@@ -125,6 +128,7 @@ class GenerateWikiCorpus:
         # pathDictionary = '/Volumes/My Passport/gensim-wiki/dictionary.dict'
         # pathCorpus = '/Volumes/My Passport/gensim-wiki/corpus.mm'
 
+        self.create_folder_if_not_exists(self._pathLocation)
 
 
 
@@ -147,7 +151,7 @@ class GenerateWikiCorpus:
         dictionary.compactify()
         dictionary.save(self._pathDictionary)
 
-        corpus = GenerateCorpus(listFiles)
+        corpus = GenerateCorpus(listFiles,dictionary)
         corpora.MmCorpus.serialize(self._pathCorpus, corpus)
 
         # Save index to file
